@@ -58,10 +58,12 @@ export default function Cart() {
           box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
         .cart-item img {
-          width: 80px;
-          height: 80px;
-          object-fit: cover;
+          width: 100px;
+          max-height: 100px;
+          object-fit: contain;  /* ✅ keeps original proportions */
           border-radius: 8px;
+          background: #f3f4f6; /* light gray behind transparent/odd-sized images */
+          padding: 4px;
         }
         button {
           margin-top: 8px;
