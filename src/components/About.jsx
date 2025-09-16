@@ -41,7 +41,6 @@ export default function About() {
 
       <style jsx="true">{`
         .about {
-          min-height: 100vh;
           padding: 60px 20px;
           background: #f9fafb;
           color: #111827;
