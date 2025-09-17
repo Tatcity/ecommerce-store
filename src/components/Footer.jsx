@@ -1,4 +1,3 @@
-// src/components/Footer.jsx
 import { Link } from "react-router-dom";
 
 export default function Footer() {
@@ -27,8 +26,8 @@ export default function Footer() {
         {/* Contact Info */}
         <div className="contact-info">
           <p>📞 (416) 555-1234</p>
-          <p>📧 support@myecomshop.com</p>
-          <p>📍 Toronto, ON</p>
+          <p>📧 info@gmail.ca</p>
+          <p>📍 300 Borough Dr, Scarborough, ON M1P 4P5</p>
         </div>
       </div>
 

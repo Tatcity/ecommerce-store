@@ -1,4 +1,3 @@
-// src/components/Contact.jsx
 export default function Contact() {
   return (
     <section className="contact">
@@ -13,22 +12,34 @@ export default function Contact() {
           📞 Phone: <a href="tel:+14165551234">(416) 555-1234</a>
         </p>
         <p>
-          📧 Email: <a href="mailto:info@norbec.ca">info@norbec.ca</a>
+          📧 Email: <a href="mailto:info@gmail.ca">info@gmail.ca</a>
         </p>
-        <p>📍 Toronto, ON</p>
+        <p>📍 300 Borough Dr, Scarborough, ON M1P 4P5</p>
         <p>🕒 Mon–Fri: 9am – 6pm | Sat: 10am – 4pm | Sun: Closed</p>
       </div>
 
       {/* Map */}
       <iframe
         title="map"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.515598302032!2d-79.38318408450927!3d43.653226779121534!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b34d721d8b1f5%3A0x2f4a46b58c8794f9!2sToronto%2C%20ON!5e0!3m2!1sen!2sca!4v1689963000000"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2887.7777220200655!2d-79.25919252362032!3d43.7764370710968!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4cf39565c5d1d%3A0x3bbf6a7b5e5c1442!2s300%20Borough%20Dr%2C%20Scarborough%2C%20ON%20M1P%204P5!5e0!3m2!1sen!2sca!4v1694976000000"
         width="100%"
         height="300"
         style={{ border: 0, marginTop: "20px", borderRadius: "12px" }}
         allowFullScreen=""
         loading="lazy"
       ></iframe>
+
+      {/* Get Directions Button */}
+      <div className="directions">
+        <a
+          href="https://www.google.com/maps/dir/?api=1&destination=300+Borough+Dr,+Scarborough,+ON+M1P+4P5"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn primary"
+        >
+          Get Directions
+        </a>
+      </div>
 
       <style jsx="true">{`
         .contact {
@@ -58,6 +69,22 @@ export default function Contact() {
         }
         a:hover {
           text-decoration: underline;
+        }
+        .directions {
+          margin-top: 20px;
+        }
+        .btn.primary {
+          display: inline-block;
+          background: #2563eb;
+          color: #fff;
+          padding: 10px 20px;
+          border-radius: 6px;
+          font-weight: 600;
+          text-decoration: none;
+          transition: background 0.3s;
+        }
+        .btn.primary:hover {
+          background: #1e40af;
         }
       `}</style>
     </section>
