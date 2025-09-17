@@ -8,27 +8,6 @@ export default function Home() {
     { title: "Backpack", image: "/backpack.jpg", price: "$59" },
   ];
 
-  const testimonials = [
-    {
-      name: "Alex P.",
-      feedback:
-        "I love shopping here — the products are top quality and shipping was super fast!",
-      image: "/user1.jpg",
-    },
-    {
-      name: "Maria G.",
-      feedback:
-        "The checkout process was smooth and I got a great discount. Highly recommend!",
-      image: "/user2.jpg",
-    },
-    {
-      name: "James K.",
-      feedback:
-        "Fantastic customer support and the items look even better in person.",
-      image: "/user3.jpg",
-    },
-  ];
-
   return (
     <div>
       {/* Hero Section */}
@@ -61,46 +40,26 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Promo Banner */}
-      <section className="promo">
-        <h2>🔥 Limited Time Offer</h2>
-        <p>Get up to 30% off select items this week only!</p>
-        <Link to="/shop" className="btn primary">Shop the Sale</Link>
-      </section>
-
-      {/* Testimonials */}
-      <section className="testimonials">
-        <h2>What Our Customers Say</h2>
-        <div className="testimonial-grid">
-          {testimonials.map((t, i) => (
-            <div className="testimonial-card" key={i}>
-              <img src={t.image} alt={t.name} className="testimonial-img" />
-              <p className="feedback">“{t.feedback}”</p>
-              <div className="testimonial-footer">
-                <p className="name">— {t.name}</p>
-                <div className="stars">⭐⭐⭐⭐⭐</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
       <style jsx="true">{`
         /* Hero */
         .hero {
-          background: url('/logo.png') center/cover no-repeat; /* ✅ logo as full hero background */
+          background: url('/logo.png') center/cover no-repeat;
           color: #fff;
           text-align: center;
-          padding: 100px 20px;
-          position: relative;
-          margin: 0; /* ✅ removes white gap above */
+          min-height: 100vh;          /* ✅ full screen height */
+          display: flex;              /* ✅ use flexbox */
+          align-items: center;        /* ✅ center vertically */
+          justify-content: center;    /* ✅ center horizontally */
+          margin: 0;
+          padding: 0;
         }
         .hero-overlay {
           background: rgba(0, 0, 0, 0.55);
-          padding: 60px 20px;
+          padding: 40px 20px;
           border-radius: 12px;
           max-width: 800px;
-          margin: auto;
+          width: 100%;
+          margin: 0 auto;
         }
         .hero h1 {
           font-size: 2.5rem;
@@ -114,12 +73,13 @@ export default function Home() {
           display: flex;
           gap: 15px;
           justify-content: center;
+          flex-wrap: wrap; /* ✅ makes buttons wrap nicely on mobile */
         }
 
         /* Featured Products */
         .featured {
           padding: 40px 20px;
-          margin-top: 0; /* ✅ removes white gap below hero */
+          margin-top: 0;
           text-align: center;
         }
         .product-grid {
@@ -147,68 +107,6 @@ export default function Home() {
           font-weight: bold;
           color: #111827;
           margin: 10px 0;
-        }
-
-        /* Promo */
-        .promo {
-          background: #1f2937;
-          color: #fff;
-          padding: 60px 20px;
-          text-align: center;
-        }
-        .promo h2 {
-          font-size: 2rem;
-          margin-bottom: 10px;
-        }
-
-        /* Testimonials */
-        .testimonials {
-          padding: 60px 20px;
-          background: #f9fafb;
-          text-align: center;
-        }
-        .testimonial-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-          gap: 25px;
-          margin-top: 30px;
-        }
-        .testimonial-card {
-          background: #fff;
-          border: 1px solid #e5e7eb;
-          border-radius: 12px;
-          padding: 25px;
-          text-align: center;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-          transition: transform 0.2s;
-        }
-        .testimonial-card:hover {
-          transform: translateY(-5px);
-        }
-        .testimonial-img {
-          width: 60px;
-          height: 60px;
-          border-radius: 50%;
-          object-fit: cover;
-          margin-bottom: 15px;
-        }
-        .feedback {
-          font-size: 1.1rem;
-          margin-bottom: 15px;
-        }
-        .testimonial-footer {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 5px;
-        }
-        .name {
-          font-weight: bold;
-          color: #111827;
-        }
-        .stars {
-          color: #fbbf24;
-          font-size: 1.1rem;
         }
 
         /* Buttons */
