@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Shop() {
   const [products] = useState([
@@ -27,12 +27,16 @@ export default function Shop() {
     { id: 23, title: "Coffee Maker", image: "/coffee.jpg", price: "$89" },
   ]);
 
-  // ✅ Track quantities per product
   const [quantities, setQuantities] = useState({});
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState("");
 
   const itemsPerPage = 10;
+
+  // ✅ scroll to top whenever page changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [page]);
 
   function handleQuantityChange(id, value) {
     setQuantities((prev) => ({ ...prev, [id]: Math.max(1, Number(value)) }));
@@ -54,12 +58,10 @@ export default function Shop() {
     alert(`${qtyToAdd} × ${product.title} added to cart 🛒`);
   }
 
-  // ✅ Filtering
   const filteredProducts = products.filter((p) =>
     p.title.toLowerCase().includes(filter.toLowerCase())
   );
 
-  // ✅ Pagination
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const startIndex = (page - 1) * itemsPerPage;
   const currentProducts = filteredProducts.slice(startIndex, startIndex + itemsPerPage);
@@ -70,14 +72,13 @@ export default function Shop() {
         <h2>Shop All Products</h2>
         <p className="subtitle">Browse our latest products and best deals.</p>
 
-        {/* ✅ Filter input */}
         <input
           type="text"
           placeholder="Search products..."
           value={filter}
           onChange={(e) => {
             setFilter(e.target.value);
-            setPage(1); // reset to page 1 when filtering
+            setPage(1);
           }}
           className="filter-input"
         />
@@ -85,21 +86,23 @@ export default function Shop() {
         <div className="product-grid">
           {currentProducts.map((p) => (
             <div className="product-card" key={p.id}>
-              <img src={p.image} alt={p.title} className="product-img" />
-              <h3>{p.title}</h3>
-              <p className="price">{p.price}</p>
-
-              <input
-                type="number"
-                min="1"
-                value={quantities[p.id] || 1}
-                onChange={(e) => handleQuantityChange(p.id, e.target.value)}
-                className="qty-input"
-              />
-
-              <button className="btn-add" onClick={() => handleAddToCart(p)}>
-                Add to Cart
-              </button>
+              <div className="image-wrapper">
+                <img src={p.image} alt={p.title} className="product-img" />
+              </div>
+              <div className="card-body">
+                <h3>{p.title}</h3>
+                <p className="price">{p.price}</p>
+                <input
+                  type="number"
+                  min="1"
+                  value={quantities[p.id] || 1}
+                  onChange={(e) => handleQuantityChange(p.id, e.target.value)}
+                  className="qty-input"
+                />
+                <button className="btn-add" onClick={() => handleAddToCart(p)}>
+                  Add to Cart
+                </button>
+              </div>
             </div>
           ))}
         </div>
@@ -151,38 +154,52 @@ export default function Shop() {
         }
         .product-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
           gap: 25px;
-          margin-bottom: 30px;
+          margin-bottom: 40px;
         }
         .product-card {
+          display: flex;
+          flex-direction: column;
           background: #fff;
           border: 1px solid #e5e7eb;
           border-radius: 12px;
           padding: 20px;
           transition: transform 0.2s, box-shadow 0.2s;
+          height: 100%;
         }
         .product-card:hover {
           transform: translateY(-5px);
           box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
         }
-        .product-img {
-          width: 100%;
-          max-height: 200px;
-          object-fit: contain;
-          border-radius: 8px;
+        .image-wrapper {
+          height: 180px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           margin-bottom: 15px;
-          background: #f3f4f6;
+          overflow: hidden;
+        }
+        .product-img {
+          max-width: 100%;
+          max-height: 100%;
+          object-fit: contain;
+        }
+        .card-body {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          flex: 1;
         }
         .price {
           font-weight: bold;
           color: #2563eb;
-          margin: 10px 0 15px;
+          margin: 10px 0;
         }
         .qty-input {
           width: 60px;
           padding: 6px;
-          margin-bottom: 12px;
+          margin: 0 auto 12px;
           border: 1px solid #d1d5db;
           border-radius: 6px;
           text-align: center;
@@ -206,6 +223,7 @@ export default function Shop() {
           align-items: center;
           gap: 20px;
           margin-top: 20px;
+          padding: 20px 0;
         }
         .pagination button {
           background: #2563eb;
