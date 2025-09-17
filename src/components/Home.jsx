@@ -1,4 +1,3 @@
-// src/components/Home.jsx
 import { Link } from "react-router-dom";
 
 export default function Home() {
@@ -33,7 +32,7 @@ export default function Home() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="hero" style={{ backgroundImage: "url('/hero-store.jpg')" }}>
+      <section className="hero">
         <div className="hero-overlay">
           <h1>Discover the Best Deals Online</h1>
           <p className="tagline">Trendy, affordable, and delivered to your door.</p>
@@ -89,12 +88,12 @@ export default function Home() {
       <style jsx="true">{`
         /* Hero */
         .hero {
-          background-size: cover;
-          background-position: center;
+          background: url('/logo.png') center/cover no-repeat; /* ✅ logo as full hero background */
           color: #fff;
           text-align: center;
-          padding: 120px 20px;
+          padding: 100px 20px;
           position: relative;
+          margin: 0; /* ✅ removes white gap above */
         }
         .hero-overlay {
           background: rgba(0, 0, 0, 0.55);
@@ -119,7 +118,8 @@ export default function Home() {
 
         /* Featured Products */
         .featured {
-          padding: 60px 20px;
+          padding: 40px 20px;
+          margin-top: 0; /* ✅ removes white gap below hero */
           text-align: center;
         }
         .product-grid {

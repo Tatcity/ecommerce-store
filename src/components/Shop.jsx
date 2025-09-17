@@ -29,6 +29,10 @@ export default function Shop() {
 
   // ✅ Track quantities per product
   const [quantities, setQuantities] = useState({});
+  const [page, setPage] = useState(1);
+  const [filter, setFilter] = useState("");
+
+  const itemsPerPage = 10;
 
   function handleQuantityChange(id, value) {
     setQuantities((prev) => ({ ...prev, [id]: Math.max(1, Number(value)) }));
@@ -50,20 +54,41 @@ export default function Shop() {
     alert(`${qtyToAdd} × ${product.title} added to cart 🛒`);
   }
 
+  // ✅ Filtering
+  const filteredProducts = products.filter((p) =>
+    p.title.toLowerCase().includes(filter.toLowerCase())
+  );
+
+  // ✅ Pagination
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  const startIndex = (page - 1) * itemsPerPage;
+  const currentProducts = filteredProducts.slice(startIndex, startIndex + itemsPerPage);
+
   return (
     <section className="shop">
       <div className="shop-container">
         <h2>Shop All Products</h2>
         <p className="subtitle">Browse our latest products and best deals.</p>
 
+        {/* ✅ Filter input */}
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={filter}
+          onChange={(e) => {
+            setFilter(e.target.value);
+            setPage(1); // reset to page 1 when filtering
+          }}
+          className="filter-input"
+        />
+
         <div className="product-grid">
-          {products.map((p) => (
+          {currentProducts.map((p) => (
             <div className="product-card" key={p.id}>
               <img src={p.image} alt={p.title} className="product-img" />
               <h3>{p.title}</h3>
               <p className="price">{p.price}</p>
 
-              {/* Quantity input */}
               <input
                 type="number"
                 min="1"
@@ -72,14 +97,24 @@ export default function Shop() {
                 className="qty-input"
               />
 
-              <button
-                className="btn-add"
-                onClick={() => handleAddToCart(p)}
-              >
+              <button className="btn-add" onClick={() => handleAddToCart(p)}>
                 Add to Cart
               </button>
             </div>
           ))}
+        </div>
+
+        {/* ✅ Pagination controls */}
+        <div className="pagination">
+          <button disabled={page === 1} onClick={() => setPage(page - 1)}>
+            ◀ Prev
+          </button>
+          <span>
+            Page {page} of {totalPages}
+          </span>
+          <button disabled={page === totalPages} onClick={() => setPage(page + 1)}>
+            Next ▶
+          </button>
         </div>
       </div>
 
@@ -90,31 +125,36 @@ export default function Shop() {
           background: #f9fafb;
           color: #111827;
         }
-
         .shop-container {
           max-width: 1200px;
           margin: auto;
           text-align: center;
         }
-
         h2 {
           font-size: 2.5rem;
           margin-bottom: 10px;
           font-weight: 700;
         }
-
         .subtitle {
-          margin-bottom: 40px;
+          margin-bottom: 20px;
           color: #6b7280;
           font-size: 1.1rem;
         }
-
+        .filter-input {
+          padding: 10px;
+          width: 60%;
+          max-width: 400px;
+          margin-bottom: 30px;
+          border: 1px solid #d1d5db;
+          border-radius: 8px;
+          font-size: 1rem;
+        }
         .product-grid {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
           gap: 25px;
+          margin-bottom: 30px;
         }
-
         .product-card {
           background: #fff;
           border: 1px solid #e5e7eb;
@@ -126,7 +166,6 @@ export default function Shop() {
           transform: translateY(-5px);
           box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
         }
-
         .product-img {
           width: 100%;
           max-height: 200px;
@@ -135,13 +174,11 @@ export default function Shop() {
           margin-bottom: 15px;
           background: #f3f4f6;
         }
-
         .price {
           font-weight: bold;
           color: #2563eb;
           margin: 10px 0 15px;
         }
-
         .qty-input {
           width: 60px;
           padding: 6px;
@@ -150,7 +187,6 @@ export default function Shop() {
           border-radius: 6px;
           text-align: center;
         }
-
         .btn-add {
           background: #2563eb;
           color: #fff;
@@ -163,6 +199,25 @@ export default function Shop() {
         }
         .btn-add:hover {
           background: #1e40af;
+        }
+        .pagination {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 20px;
+          margin-top: 20px;
+        }
+        .pagination button {
+          background: #2563eb;
+          color: white;
+          border: none;
+          padding: 8px 14px;
+          border-radius: 6px;
+          cursor: pointer;
+        }
+        .pagination button:disabled {
+          background: #9ca3af;
+          cursor: not-allowed;
         }
       `}</style>
     </section>
